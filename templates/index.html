@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>ICSearch</title>
+{% endblock %}
+
+{% block body %}
+<div class="homeContainer">
+    <div class="title">
+        <span class="yellow">IC</span>
+        <span class="black">S</span>
+        <span class="blue">earch</span>
+    </div>
+    <form action="/result" method="POST">
+        <div class="bar">
+            <input class="searchBar" type="text" title="Search" name="query" placeholder="Search School of ICS" />
+            <span class="fas fa-search"></span>
+        </div>
+        <div class="buttons">
+            <button style="border: none" class="button" type="submit">Search</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

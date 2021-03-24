@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>{{query}} - ICSearch</title>
+{% endblock %}
+
+{% block body %}
+<div class="resultContainer">
+    <form action="/result" method="POST">
+        <div id="navbar">
+            <div class="actualSearchBar">
+                <a href="/" class="title2">
+                    <span class="yellow">IC</span>
+                    <span class="black">S</span>
+                    <span class="blue">earch</span>
+                </a>
+                <div class="bar2">
+                    <img class="line" src="{{ url_for('static', filename='line.jpg') }}" />
+                    <button class=" button2" type="submit">
+                        <span class="fas fa-search"></span>
+                    </button>
+                    <input oninput="checkInput()" id="searchBar2" class="searchBar2" type="text" title="Search"
+                        name="query" value="{{ query }}" />
+                    <div id="buttons2" class="buttons2">
+                        <button type="button" class="clearButton" onclick="clearText()">
+                            <svg width="82" height="15" viewBox="0 0 82 82" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M73.4586 1.87974L40.9999 34.3383L8.54135 1.87973C6.70173 0.0401008 3.7192 0.0400767 1.87971 1.87974C0.0402896 3.71934 0.0400552 6.70184 1.87973 8.54135C1.87973 8.54136 1.87974 8.54136 1.87974 8.54137L34.3383 40.9999L1.87973 73.4585C0.0401061 75.2981 0.0400758 78.2806 1.87973 80.1201C3.71937 81.9598 6.70189 81.9596 8.54135 80.1201L40.9999 47.6615L73.4583 80.1201C75.298 81.9598 78.2807 81.9596 80.1201 80.1201L79.7666 79.7666L80.1201 80.1201C81.9596 78.2805 81.9596 75.298 80.1201 73.4585L47.6619 40.9999L80.1204 8.54135L79.7669 8.1878L80.1205 8.54133C81.9599 6.70171 81.9599 3.71921 80.1204 1.87973C78.2808 0.0401063 75.2981 0.0400755 73.4586 1.87972C73.4586 1.87973 73.4586 1.87974 73.4586 1.87974Z"
+                                    fill="#70757A" stroke="#70757A" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar2">
+            <div class="actualSearchBar">
+                <a href="/" class="title2">
+                    <span class="yellow">IC</span>
+                    <span class="black">S</span>
+                    <span class="blue">earch</span>
+                </a>
+                <div class="bar2">
+                    <img class="line" src="{{ url_for('static', filename='line.jpg') }}" />
+                    <button class=" button2" type="submit">
+                        <span class="fas fa-search"></span>
+                    </button>
+                    <input oninput="checkInput()" id="searchBar2" class="searchBar2" type="text" title="Search"
+                        name="query" value="{{ query }}" />
+                    <div id="buttons2" class="buttons2">
+                        <button type="button" class="clearButton" onclick="clearText()">
+                            <svg width="82" height="15" viewBox="0 0 82 82" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M73.4586 1.87974L40.9999 34.3383L8.54135 1.87973C6.70173 0.0401008 3.7192 0.0400767 1.87971 1.87974C0.0402896 3.71934 0.0400552 6.70184 1.87973 8.54135C1.87973 8.54136 1.87974 8.54136 1.87974 8.54137L34.3383 40.9999L1.87973 73.4585C0.0401061 75.2981 0.0400758 78.2806 1.87973 80.1201C3.71937 81.9598 6.70189 81.9596 8.54135 80.1201L40.9999 47.6615L73.4583 80.1201C75.298 81.9598 78.2807 81.9596 80.1201 80.1201L79.7666 79.7666L80.1201 80.1201C81.9596 78.2805 81.9596 75.298 80.1201 73.4585L47.6619 40.9999L80.1204 8.54135L79.7669 8.1878L80.1205 8.54133C81.9599 6.70171 81.9599 3.71921 80.1204 1.87973C78.2808 0.0401063 75.2981 0.0400755 73.4586 1.87972C73.4586 1.87973 73.4586 1.87974 73.4586 1.87974Z"
+                                    fill="#70757A" stroke="#70757A" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="resultBar">
+            {% if valid %}
+            <p class="foundPg">Found {{ totalResultAmount }} results ({{ time }} seconds)</p>
+            <button type="button" onclick="showDropdown()" class="dropbtn">Filter <span
+                    class="fas fa-caret-down"></span></button>
+            <div id="myDropdown" class="dropdown-content">
+                <button name="resultAmount" type="submit" value="5">5 results</button>
+                <button name="resultAmount" type="submit" value="10">10 results</button>
+                <button name="resultAmount" type="submit" value="15">15 results</button>
+                <button name="resultAmount" type="submit" value="20">20 results</button>
+            </div>
+        </div>
+        <div class="searchResults">
+            {% for info in infoList %}
+            <ul class="result">
+                <li>
+                    <a href="{{ info[0] }}"><span class="greyLink">{{ info[1]}}</span></a>
+                </li>
+                <li class="liTitle">
+                    <a class="aTagTitle" href="{{ info[0] }}"><span class="pageTitle">{{
+                            info[2]}}</span></a>
+                </li>
+                <li>
+                    <p>{{ info[3]}}</p>
+                </li>
+            </ul>
+            {% endfor %}
+            <div class="pagiCenter">
+                <ul class="pagination">
+                    {% if page > 1 %}
+                    <li class="prev">
+                        <a href="/result?page={{ page - 1 }}&resultAmount={{resultAmount}}&query={{query}}"
+                            tabindex="-1">&lt Prev</a>
+                    </li>
+                    {% endif %}
+                    <li id="1" class="pageNumber"><a
+                            href="/result?page=1&resultAmount={{resultAmount}}&query={{query}}">1</a>
+                    </li>
+                    <li id="2" class="pageNumber"><a
+                            href="/result?page=2&resultAmount={{resultAmount}}&query={{query}}">2</a>
+                    </li>
+                    <li id="3" class="pageNumber"><a
+                            href="/result?page=3&resultAmount={{resultAmount}}&query={{query}}">3</a>
+                    </li>
+                    <li id="4" class="pageNumber"><a
+                            href="/result?page=4&resultAmount={{resultAmount}}&query={{query}}">4</a>
+                    </li>
+                    <li id="5" class="pageNumber"><a
+                            href="/result?page=5&resultAmount={{resultAmount}}&query={{query}}">5</a>
+                    </li>
+                    <li class="next">
+                        <a href="/result?page={{ page + 1 }}&resultAmount={{resultAmount}}&query={{query}}">Next &gt</a>
+                    </li>
+                </ul>
+            </div>
+            {% else %}
+            <p> No results for your query.</p>
+            {% endif %}
+        </div>
+    </form>
+</div>
+
+
+<script>
+    window.onscroll = function () { scrollNavbar() };
+    var navbar = document.getElementsByClassName("navbar2");
+    var sticky = 150;
+    navbar = navbar[0]
+    function scrollNavbar() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+        } else {
+            navbar.classList.remove("sticky");
+        }
+    }
+
+    function highlightPage(page) {
+        var page = String(page);
+        var pages = document.getElementsByClassName('pageNumber');
+        for (var i = 0; i < pages.length; i++) {
+            var x = pages[i];
+            if (x.id == page) {
+                x.classList.add("active");
+            }
+        }
+    }
+
+    function clearText() {
+        document.getElementById('searchBar2').value = "";
+        checkInput();
+    }
+
+    function showDropdown() {
+        var content = document.getElementById("myDropdown");
+        content.classList.toggle("show");
+    }
+
+    function checkInput() {
+        var input = document.getElementById("searchBar2");
+        var clearButton = document.getElementsByClassName("clearButton")
+        if (input && input.value) {
+            if (!clearButton[0].classList.contains("show2")) {
+                clearButton[0].classList.add("show2");
+            }
+        } else {
+            if (clearButton[0].classList.contains("show2")) {
+                clearButton[0].classList.remove("show2");
+            }
+        }
+    }
+
+    window.onclick = function (event) {
+        if (!event.target.matches(".dropbtn")) {
+            // might be multiple classes with "dropdown-content" class so we should go through all of them
+            var dd = document.getElementsByClassName("dropdown-content");
+            for (var i = 0; i < dd.length; i++) {
+                var x = dd[i];
+                if (x.classList.contains("show")) {
+                    x.classList.remove("show");
+                }
+            }
+        }
+    }
+    var page = "{{ page }}";
+    console.log(page)
+    highlightPage(page)
+    checkInput()
+</script>
+{% endblock %}
+
+<!-- <div class="projects">
+    <button>Projects</button>
+    <ul>
+        <li><input type="text" name="resultAmount" value="10"></li>
+        <li><a href="#">Music App</a></li>
+    </ul>
+</div> -->
